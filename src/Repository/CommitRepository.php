@@ -14,37 +14,24 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CommitRepository extends ServiceEntityRepository
 {
+    const PAGE_SIZE = 50;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Commit::class);
     }
 
-    // /**
-    //  * @return Commit[] Returns an array of Commit objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getPagedResults(?int $page)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        if (empty($page)) {
+            $page = 1;
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Commit
-    {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy('c.date', 'ASC')
+            ->setFirstResult(($page - 1) * self::PAGE_SIZE)
+            ->setMaxResults(self::PAGE_SIZE)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }
