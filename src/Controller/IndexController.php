@@ -21,12 +21,16 @@ class IndexController extends AbstractController
      * @param int|null $page
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(int $page = null)
+    public function index(int $page = 1)
     {
         $commits = $this->commitRepository->getPagedResults($page);
 
+        $lastPage = $this->commitRepository->getLastPageNumber();
+
         return $this->render('index/index.html.twig', [
             'commits' => $commits,
+            'page' => $page ?? 1,
+            'lastPage' => $lastPage,
         ]);
     }
 }

@@ -5,13 +5,12 @@
 {% block body %}
 <style>
     .wrapper { max-width: 1200px; margin: auto }
-    .commit-list { max-width: 800px; margin: auto; }
     .profile-pic { width: 70px; margin: auto; }
     .time { color: #666; font-size: 0.75em; }
     * { vertical-align: middle; }
     h1 { text-align: center; margin: 1em; }
     h1, a.commit-message { font-family: 'Roboto Mono', monospace; color: #000; }
-    .row:not(:last-child) { border-bottom: 1px solid #ccc; }
+    .commit-list .row:not(:last-child) { border-bottom: 1px solid #ccc; }
     .row { padding: 5px 0; }
     .sidebar { font-size: 0.8em; }
 </style>
@@ -19,7 +18,7 @@
 <div class="wrapper">
     <h1>This Time It's Really Fixed!</h1>
 
-    <div class="row">
+    <div class="row commit-list">
         <div class="col-sm-12 col-md-9">
             {% for commit in commits %}
                 <div class="row">
@@ -53,6 +52,18 @@
                     </div>
                 </div>
             {% endfor %}
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    {% if page > 1 %}
+                        <a href="/{{ page - 1 }}">&laquo; Previous Page</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 text-right">
+                    {% if page < lastPage %}
+                        <a href="{{ page + 1 }}">Next Page &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
         <div class="col-sm-12 col-md-3">
             <div class="sidebar text-right">

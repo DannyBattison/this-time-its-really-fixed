@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CommitRepository extends ServiceEntityRepository
 {
-    const PAGE_SIZE = 50;
+    const PAGE_SIZE = 25;
 
     public function __construct(RegistryInterface $registry)
     {
@@ -31,7 +31,18 @@ class CommitRepository extends ServiceEntityRepository
             ->orderBy('c.date', 'DESC')
             ->setFirstResult(($page - 1) * self::PAGE_SIZE)
             ->setMaxResults(self::PAGE_SIZE)
+            ->distinct(true)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getLastPageNumber()
+    {
+        $totalRows = $this->createQueryBuilder('c')
+            ->select('COUNT(1)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return ceil($totalRows / self::PAGE_SIZE);
     }
 }
