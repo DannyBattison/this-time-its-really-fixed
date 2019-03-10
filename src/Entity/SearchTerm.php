@@ -22,7 +22,7 @@ class SearchTerm
     private $query;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastSynced;
 
@@ -48,7 +48,7 @@ class SearchTerm
         return $this->lastSynced;
     }
 
-    public function setLastSynced(\DateTimeInterface $lastSynced): self
+    public function setLastSynced(?\DateTimeInterface $lastSynced): self
     {
         $this->lastSynced = $lastSynced;
 
