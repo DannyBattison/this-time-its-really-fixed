@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}This Time It's Really Fixed!{% endblock %}
+
+{% block body %}
+<style>
+    .wrapper { max-width: 1200px; margin: auto }
+    .commit-list { max-width: 800px; margin: auto; }
+    .profile-pic { width: 70px; margin: auto; }
+    .time { color: #666; font-size: 0.75em; }
+    * { vertical-align: middle; }
+    h1 { text-align: center; }
+    h1, a.commit-message { font-family: 'Roboto Mono', monospace; color: #000; }
+    .row:not(:last-child) { border-bottom: 1px solid #ccc; }
+    .row { padding: 5px 0; }
+</style>
+
+<div class="wrapper">
+    <h1>This Time It's Really Fixed!</h1>
+
+    <div class="commit-list">
+        {% for commit in commits %}
+            <div class="row">
+                <div class="col-sm-3 col-md-5">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 text-center">
+                            <a href="https://github.com/{{ commit.getAuthorName() }}" target="_blank">
+                                <img
+                                        src="https://avatars3.githubusercontent.com/u/{{ commit.getAuthorId() }}?s=100"
+                                        alt="{{ commit.getAuthorName() }}"
+                                        class="profile-pic"
+                                >
+                            </a>
+                        </div>
+                        <div class="col-sm-12 col-md-9 text-center">
+                            <p>
+                                <a href="https://github.com/{{ commit.getAuthorName() }}" target="_blank">
+                                    {{ commit.getAuthorName() }}
+                                </a>
+                            </p>
+                            <p class="time">{{ commit.getDate().format('Y-m-d H:i:s') }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9 col-md-7">
+                    <div class="commit-message-wrap">
+                        <a href="{{ commit.getUrl() }}" target="_blank" class="commit-message">
+                            {{ commit.getMessage() }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

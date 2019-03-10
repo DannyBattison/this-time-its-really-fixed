@@ -28,7 +28,7 @@ class CommitRepository extends ServiceEntityRepository
         }
 
         return $this->createQueryBuilder('c')
-            ->orderBy('c.date', 'ASC')
+            ->orderBy('c.date', 'DESC')
             ->setFirstResult(($page - 1) * self::PAGE_SIZE)
             ->setMaxResults(self::PAGE_SIZE)
             ->getQuery()
