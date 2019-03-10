@@ -50,6 +50,10 @@ class Search
         $commits = [];
 
         foreach ($searchResults->items as $searchResult) {
+            if (empty($searchResult->committer)) {
+                continue;
+            }
+
             $dateTime = \DateTime::createFromFormat(self::DATE_FORMAT, $searchResult->commit->author->date);
 
             if (!empty($lastSync) && $dateTime <= $lastSync) {
@@ -61,7 +65,8 @@ class Search
                 ->setUrl($searchResult->html_url)
                 ->setMessage($searchResult->commit->message)
                 ->setDate($dateTime)
-                ->setAuthorName($searchResult->commit->author->name);
+                ->setAuthorName($searchResult->committer->login)
+                ->setAuthorId($searchResult->committer->id);
 
             $commits[] = $commit;
         }

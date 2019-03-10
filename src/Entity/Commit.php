@@ -36,6 +36,11 @@ class Commit
      */
     private $authorName;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $authorId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Commit
     public function setAuthorName(string $authorName): self
     {
         $this->authorName = $authorName;
+
+        return $this;
+    }
+
+    public function getAuthorId(): int
+    {
+        return $this->authorId;
+    }
+
+    public function setAuthorId(int $authorId): self
+    {
+        $this->authorId = $authorId;
 
         return $this;
     }
